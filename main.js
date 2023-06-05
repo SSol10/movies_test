@@ -57,5 +57,82 @@ fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', opti
         })
     })
     .catch(err => console.error(err));
-    // 영화포스터를 클릭시 id값을 출력하게 해놓았다...!!
-    const movieId = id => alert(`영화 id : ${id}`);
+// 영화포스터를 클릭시 id값을 출력하게 해놓았다...!!
+const movieId = id => alert(`영화 id : ${id}`);
+
+let inputName = localStorage.getItem("review");
+let reviewtext;
+let pwd;
+
+function loadReview() {
+    for (let i = 0; i < inputName.length;) {
+        reviewtext = inputName["inputReviewText"];
+        pwd = inputName["inputpwd"];
+
+        const $reviewList = document.createElement("li");
+        $reviewList.innerHTML = ``;
+
+        $reviewList.appendChild($reviewList)
+    }
+}
+
+// 삭제 기능 함수
+function deleteReview() {
+    if (inputName["inputpwd"] == pwd) {   // 비밀번호 확인
+        localStorage.removeItem('객체명'); // 객체 명
+    } else {
+        alert("비밀번호가 다릅니다");
+    }
+}
+let deleteBtn = document.getElementById('test');
+deleteBtn.addEventListener("click", deleteReview);
+
+function deleteReview() {
+    console.log("함수 실행");
+    confirm('삭제하시겠습니까?'
+    ,alert("삭제되었습니다.")//inputName["inputpwd"] == pwd ? localStorage.removeItem("객체명") : alert("비밀번호가 다릅니다.")  
+    ,null)
+
+    //inputName["inputpwd"] == pwd ?  true : false
+}
+
+$('button[btnType = "del"]').click(function (e) {
+    $btndelete.confirm('삭제하시겠습니까?'
+        ,inputName["inputpwd"] == pwd ? localStorage.removeItem("객체명") : alert("비밀번호가 다릅니다.")
+        ,
+
+    )
+});
+
+
+review = {
+    first: {
+        id: "one",
+        pw: "123a",
+    },
+    second: {
+        id: "two",
+        pw: "123b"
+    }
+}
+
+$('button[btnType="del"]').click(function (e) {
+    var rid = this.parentElement.parentElement.parentElement.parentElement.id.split('replyIdNo')[1];
+    var content = this.parentElement.parentElement.querySelector('textarea').value;
+    //var seq = this.parentElement.parentElement.querySelector('td#reSeq').innerText;
+    $ux.cjMessage.confirm('삭제하시겠습니까?', null, function () {
+        $ux.data.query({
+            id: 'BMP_IDEA_VIEW.REPLY.DELETE',
+            version: '00001',
+            parameter: {
+                IDEAID: IDEAID,
+                REPLYID: rid
+            },
+            reply: function (e) {
+                $ux.messageBox('삭제되었습니다.', '');
+                initComment();
+
+            }
+        });
+    });
+});
