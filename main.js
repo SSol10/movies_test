@@ -60,6 +60,8 @@ fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', opti
 // 영화포스터를 클릭시 id값을 출력하게 해놓았다...!!
 const movieId = id => alert(`영화 id : ${id}`);
 
+
+//작성 시작
 let inputName = localStorage.getItem("review");
 let reviewtext;
 let pwd;
@@ -76,7 +78,23 @@ function loadReview() {
     }
 }
 
-// 삭제 기능 함수
+// 영화 판별 > 영화 id => key
+// 리뷰 댓글 > 시간 순서별
+/*
+영화id(즉 Key값){                       페이지 클릭 시 id 값 불러오기 => Read
+    [영화제목, 작성자명, 비밀번호, 0],  div에 저장 => class 값 반복문으로 돌리기 => 배열의 3번째 값 = localStorage에 저장되는 순
+    [영화제목, 작성자명, 비밀번호, 1],  1. 삭제하려는 index 찾기 => 배열의 3번째 값으로 일치 확인, 배열 요소 값 찾기 .indexOf(3)
+    [영화제목, 작성자명, 비밀번호, 2],  2. 해당 index의 비밀번호 일치 확인  
+    [영화제목, 작성자명, 비밀번호, 3],  3. 비밀번호 일치 => localStorage.removeItem("Key")
+    [영화제목, 작성자명, 비밀번호, 4],  4. 불일치 => reply
+   
+}*/
+
+// localStorage.setItem('json', JSON.stringify({ a: 1, b: 2 }))
+// undefined
+// JSON.parse(localStorage.getItem('json'))
+// { a: 1, b: 2 }
+
 function deleteReview() {
     if (inputName["inputpwd"] == pwd) {   // 비밀번호 확인
         localStorage.removeItem('객체명'); // 객체 명
@@ -84,44 +102,61 @@ function deleteReview() {
         alert("비밀번호가 다릅니다");
     }
 }
+
+// 삭제 기능 함수
+function deleteReview() {
+    console.log("함수 실행");
+    if (confirm('삭제하시겠습니까?')) {
+        // 해당 id를 확인 후 패스워드 확인하는 로직 필요 => 아이디 확인 반복문??
+        // 로그인 => 로그인 상태여부?
+        if (inputName["inputpwd"] == pwd) { //inputName["inputpwd"][i] == pwd
+            localStorage.removeItem("객체명"); //first? second?
+            alert("삭제되었습니다.");
+        } else if (inputName["inputpwd"] !== pwd) {
+            alert("비밀번호가 다릅니다.")
+        }
+    } else {
+        alert("취소되었습니다.")
+    }
+}
+review = {
+    first: { //id?
+        id: "one",
+        pw: "123a", // pw?
+        // txt?
+    },
+    second: {
+        id: "two",
+        pw: "123a"
+    }
+}
+
 let deleteBtn = document.getElementById('test');
 deleteBtn.addEventListener("click", deleteReview);
 
-function deleteReview() {
-    console.log("함수 실행");
-    confirm('삭제하시겠습니까?'
-    ,alert("삭제되었습니다.")//inputName["inputpwd"] == pwd ? localStorage.removeItem("객체명") : alert("비밀번호가 다릅니다.")  
-    ,null)
+// confirm('삭제하시겠습니까?'
+// ,alert("삭제되었습니다.")//inputName["inputpwd"] == pwd ? localStorage.removeItem("객체명") : alert("비밀번호가 다릅니다.")  
+// ,null)
 
-    //inputName["inputpwd"] == pwd ?  true : false
-}
+//inputName["inputpwd"] == pwd ?  true : false
+
+
 
 $('button[btnType = "del"]').click(function (e) {
     $btndelete.confirm('삭제하시겠습니까?'
-        ,inputName["inputpwd"] == pwd ? localStorage.removeItem("객체명") : alert("비밀번호가 다릅니다.")
+        , inputName["inputpwd"] == pwd ? localStorage.removeItem("객체명") : alert("비밀번호가 다릅니다.")
         ,
 
     )
 });
 
 
-review = {
-    first: {
-        id: "one",
-        pw: "123a",
-    },
-    second: {
-        id: "two",
-        pw: "123b"
-    }
-}
-
-$('button[btnType="del"]').click(function (e) {
+/*$('button[btnType="del"]').click(function (e) {
     var rid = this.parentElement.parentElement.parentElement.parentElement.id.split('replyIdNo')[1];
     var content = this.parentElement.parentElement.querySelector('textarea').value;
     //var seq = this.parentElement.parentElement.querySelector('td#reSeq').innerText;
     $ux.cjMessage.confirm('삭제하시겠습니까?', null, function () {
-        $ux.data.query({
+        $ux.data.query({/*
             id: 'BMP_IDEA_VIEW.REPLY.DELETE',
             version: '00001',
             parameter: {
@@ -135,4 +170,4 @@ $('button[btnType="del"]').click(function (e) {
             }
         });
     });
-});
+});*/
