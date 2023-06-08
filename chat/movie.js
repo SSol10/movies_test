@@ -23,6 +23,10 @@ movieTitle.innerText = data.title;
 movieOverview.innerText = data.overview;
 movieRating.innerText = `평점: ${data.vote_average}/10`;
 posterImg.src = `https://image.tmdb.org/t/p/w500/${data.poster_path}`;
+    
+let main = document.querySelector('.main'); // add
+main.style.backgroundImage = 'url("https://image.tmdb.org/t/p/w500/' + data.backdrop_path + '")'; // background-img add
+    
 })
 .catch((err) => console.error(err));
 
